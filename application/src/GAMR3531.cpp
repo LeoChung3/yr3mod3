@@ -5,6 +5,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "core/randomiser.hpp" // For random number generation
 
+#include "tracy/Tracy.hpp"
+
+
 AsteriodBelt::AsteriodBelt(GLFWWindowImpl& win) : Layer(win)
 {
 	m_closeAsteroids.reserve(20);
@@ -300,6 +303,7 @@ AsteriodBelt::AsteriodBelt(GLFWWindowImpl& win) : Layer(win)
 
 void AsteriodBelt::onRender()
 {
+	ZoneScoped;
 	m_mainRenderer.render();
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -397,6 +401,7 @@ void AsteriodBelt::onRender()
 
 void AsteriodBelt::onUpdate(float timestep)
 {
+	ZoneScoped;
 	if (m_state == GameState::running) {
 		timestep = std::clamp(timestep, 0.f, 0.1f); // Clamp to be no more than a 10th of a second for physics
 

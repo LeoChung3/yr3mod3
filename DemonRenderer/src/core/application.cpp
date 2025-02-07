@@ -1,7 +1,7 @@
 ﻿/** \file application.cpp */
 
 #include "core/application.hpp"
-
+#include "tracy/Tracy.hpp"
 Application::Application(const WindowProperties& winProps)
 {
 	m_window.open(winProps);
@@ -20,6 +20,11 @@ void Application::run()
 	glEnable(GL_DEPTH_TEST);
 
 	while (m_running) {	
+
+		FrameMark;
+		ZoneScopedN("Run");
+
+
 		auto timestep = m_timer.reset();
 
 		onUpdate(timestep);
